@@ -1,20 +1,47 @@
 import streamlit as st
-import matplotlib.pyplot as plt
 import pandas as pd
-from datetime import datetime, timedelta
-import numpy as np
 import streamlit.components.v1 as components
 
-st.set_page_config(page_title="منصة رافت - نموذج تداول", layout="wide")
+st.set_page_config(page_title="منصة رافت - واجهة تداول مباشرة", layout="wide")
 
-st.title("📊 منصة رافت - نموذج لواجهة تداول مباشر")
+st.title("📊 منصة رافت - نموذج لواجهة تداول مباشرة")
 
 st.markdown("""
-مرحباً، هذا نموذج مبدئي بسيط لعرض واجهة نظام تداول مباشر يربط بيانات من Binance وTradingView،
-بهدف توضيح تجربة المستخدم وتقديم البيانات بشكل تفاعلي وسلس.
+نموذج مبسّط لعرض بيانات سوق العملات الرقمية باستخدام TradingView وبيانات محدثة،
+مصمم لتوفير تجربة مستخدم عملية وسريعة لمتابعة التداول.
 """)
 
-st.subheader("📈 بيانات أسعار مباشرة (عينة)")
+# واجهة TradingView
+st.subheader("📺 واجهة TradingView الحية")
+components.html("""
+<div class="tradingview-widget-container" style="height:820px;width:100%">
+  <div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div>
+  <div class="tradingview-widget-copyright">
+    <a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank">
+      <span class="blue-text">تابع السوق مباشرة على TradingView</span>
+    </a>
+  </div>
+  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+  {
+    "autosize": true,
+    "symbol": "BINANCE:BTCUSDT",
+    "interval": "30",
+    "timezone": "Etc/UTC",
+    "theme": "dark",
+    "style": "1",
+    "locale": "ar",
+    "enable_publishing": false,
+    "withdateranges": true,
+    "allow_symbol_change": true,
+    "calendar": false,
+    "support_host": "https://www.tradingview.com"
+  }
+  </script>
+</div>
+""", height=820)
+
+# جدول بيانات الأسعار
+st.subheader("📈 بيانات أسعار (تجريبية)")
 data = {
     "العملة": ["BTC/USDT", "ETH/USDT", "BNB/USDT", "SOL/USDT"],
     "السعر الحالي ($)": [31250, 2050, 312, 85],
@@ -24,51 +51,12 @@ data = {
 df = pd.DataFrame(data)
 st.dataframe(df)
 
-st.subheader("📊 نظرة على الاتجاه العام")
-days = pd.date_range(datetime.today() - timedelta(days=30), periods=30)
-prices = np.cumsum(np.random.randn(30)) + 31000
-
-fig, ax = plt.subplots()
-ax.plot(days, prices, color='green')
-ax.set_title("سعر BTC/USDT - حركة وهمية آخر 30 يوم")
-ax.set_ylabel("السعر بالدولار")
-ax.set_xlabel("التاريخ")
-plt.xticks(rotation=45)
-st.pyplot(fig)
-
-# TradingView widget
-st.subheader("📺 واجهة TradingView المباشرة")
-components.html("""
-<div class="tradingview-widget-container" style="height:750px;width:100%">
-  <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
-  <div class="tradingview-widget-copyright">
-    <a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank">
-      <span class="blue-text">Track all markets on TradingView</span>
-    </a>
-  </div>
-  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
-  {
-    "autosize": true,
-    "symbol": "NASDAQ:AAPL",
-    "interval": "D",
-    "timezone": "Etc/UTC",
-    "theme": "dark",
-    "style": "1",
-    "locale": "en",
-    "allow_symbol_change": true,
-    "support_host": "https://www.tradingview.com"
-  }
-  </script>
-</div>
-""", height=750)
-
 st.markdown("""
 ---
-### ⚙️ ملاحظات تقنية:
-- يمكن ربط هذه الواجهة مع Binance API لعرض بيانات حقيقية.
-- نقدر ندمج TradingView Charts بشكل حي.
-- نضيف Webhooks أو تنبيهات Telegram حسب الحاجة.
-- التصميم قابل للتطوير ليشمل تسجيل دخول، إدارة محافظ، ومتابعة تلقائية.
+📌 **ملاحظات تقنية**:
+- الكود قابل للتوسيع ليشمل ربط مباشر مع Binance API
+- يمكن تعديل TradingView لعرض أي عملة أو مؤشر فوري
+- قابل لإضافة تسجيل دخول أو إشعارات تداول بسهولة
 """)
 
-st.markdown("📞 للتواصل أو طلب النسخة الكاملة: [اضغط هنا](https://wa.me/+972569804786)")
+st.markdown("📞 للتواصل أو تجربة مخصصة: [اضغط هنا](https://wa.me/+972569804786)")

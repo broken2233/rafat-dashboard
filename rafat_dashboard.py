@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from datetime import datetime, timedelta
 import numpy as np
+import streamlit.components.v1 as components
 
 st.set_page_config(page_title="منصة رافت - نموذج تداول", layout="wide")
 
@@ -35,32 +36,10 @@ ax.set_xlabel("التاريخ")
 plt.xticks(rotation=45)
 st.pyplot(fig)
 
-st.subheader("🚀 نموذج إشارة تداول (تجريبي)")
-with st.form("trade_signal_form"):
-    pair = st.selectbox("اختر الزوج:", ["BTC/USDT", "ETH/USDT", "BNB/USDT"])
-    action = st.radio("نوع الإشارة:", ["شراء", "بيع"])
-    note = st.text_input("ملاحظة (اختياري)")
-    submitted = st.form_submit_button("إرسال")
-    if submitted:
-        st.success(f"تم استلام إشارة {action} على {pair} ✔️")
-
-st.markdown("""
----
-
-### ⚙️ ملاحظات تقنية:
-- يمكن ربط هذه الواجهة مع Binance API لعرض بيانات حقيقية.
-- نقدر ندمج TradingView Charts بشكل حي.
-- نضيف Webhooks أو تنبيهات Telegram حسب الحاجة.
-- التصميم قابل للتطوير ليشمل تسجيل دخول، إدارة محافظ، ومتابعة تلقائية.
-
-""")
-
-st.markdown("📞 للتواصل أو طلب النسخة الكاملة: [اضغط هنا](https://wa.me/+972569804786)")
-import streamlit.components.v1 as components
-
 # TradingView widget
+st.subheader("📺 واجهة TradingView المباشرة")
 components.html("""
-<div class="tradingview-widget-container" style="height:600px;width:100%">
+<div class="tradingview-widget-container" style="height:750px;width:100%">
   <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
   <div class="tradingview-widget-copyright">
     <a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank">
@@ -81,4 +60,15 @@ components.html("""
   }
   </script>
 </div>
-""", height=600)
+""", height=750)
+
+st.markdown("""
+---
+### ⚙️ ملاحظات تقنية:
+- يمكن ربط هذه الواجهة مع Binance API لعرض بيانات حقيقية.
+- نقدر ندمج TradingView Charts بشكل حي.
+- نضيف Webhooks أو تنبيهات Telegram حسب الحاجة.
+- التصميم قابل للتطوير ليشمل تسجيل دخول، إدارة محافظ، ومتابعة تلقائية.
+""")
+
+st.markdown("📞 للتواصل أو طلب النسخة الكاملة: [اضغط هنا](https://wa.me/+972569804786)")

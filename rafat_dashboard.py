@@ -14,7 +14,7 @@ st.markdown("""
 # واجهة TradingView
 st.subheader("📺 واجهة TradingView الحية")
 components.html("""
-<div class="tradingview-widget-container" style="height:820px;width:100%">
+<div class="tradingview-widget-container" style="height:1200px;width:100%">
   <div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div>
   <div class="tradingview-widget-copyright">
     <a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank">
